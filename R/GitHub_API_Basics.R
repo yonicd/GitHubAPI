@@ -23,7 +23,7 @@ gitHub_Token_Generator=function(clientID,clientSecret)
 
 extract_info=function(apiCall,token)
 {
-  request=try(httr::GET(apiCall,config(token=token)))
+  request=try(httr::GET(apiCall,httr::config(token=token)))
   if(!inherits(request,'try-error'))
   {
     request.content=httr::content(request)
