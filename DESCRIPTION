@@ -1,0 +1,18 @@
+Package: GitHubAPI
+Title: Extract data from GitHub using their API
+Version: 0.0.0.9000
+Authors@R: person("Yoonjae", "Jang", email = "yoonjaej@gmail.com", role = c("aut", "cre"))
+Description: Dealing with APIs can easily be overwhelming as one needs to read
+    through all documentation. Furthermore, it becomes even more demanding when
+    guides for deprecated API. GitHubAPI provides simple and easy way to deal with
+    GitHub API.
+Imports:
+    httr,
+    jsonlite
+Depends:
+    R (>= 3.2.2)
+License: What license is it under?
+Encoding: UTF-8
+LazyData: true
+Published: 2016-10-19
+RoxygenNote: 5.0.1
