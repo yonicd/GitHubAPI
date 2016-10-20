@@ -1,3 +1,8 @@
+devtools::use_package("httr")
+devtools::use_package("jsonlite")
+devtools::use_package("magrittr")
+devtools::use_package("parallelsugar")
+
 #'
 #' Create a GitHub oauth2.0 token
 #'
@@ -79,7 +84,6 @@ getNumForks=function(repository.url,token)
 getStargazersUsername=function(repository.url,token)
 {
   n=getNumStargazers(repository.url,token)
-
   api.url=changeGitHubRepoURLtoGitHubRepoAPICall(repository.url)
   command=paste(api.url,"/stargazers?per_page=100&page=",sep="")
   pages.url=paste(command,(1:(n/100+1)),sep="")
@@ -87,6 +91,7 @@ getStargazersUsername=function(repository.url,token)
   usernames=unlist(sapply(temp,function(x){x$login}))
   return(usernames)
 }
+
 
 
 
