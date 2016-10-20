@@ -6,7 +6,6 @@
 #' @param repository.url, token
 #' @return The number of stargazers for a particular repository
 #' @export
-
 getNumStargazers=function(repository.url,token)
 {
   repo=extract_info(changeGitHubRepoURLtoGitHubRepoAPICall(repository.url),token)
@@ -14,6 +13,8 @@ getNumStargazers=function(repository.url,token)
   return(repo$stargazers_count)
 
 }
+
+
 
 
 #' Get data of users who starred certain repository

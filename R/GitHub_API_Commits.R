@@ -5,7 +5,6 @@
 #' @param repository.url, token
 #' @return nested list of all commits for the repository
 #' @export
-
 getCommitData=function(repository.url,token)
 {
   temp=try(readLines(repository.url))
@@ -33,7 +32,6 @@ getCommitData=function(repository.url,token)
 #' @param object created by getCommitData function
 #' @return commit.cha, commit.message, commit.date, author.name, author.email, author.login, committer.name, committer.email, committer.login
 #' @export
-
 cleanUpCommitData=function(commitData)
 {
 
