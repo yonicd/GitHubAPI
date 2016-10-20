@@ -9,7 +9,6 @@ Description: Dealing with APIs can easily be overwhelming as one needs to read
 Imports:
     httr,
     jsonlite,
-    magrittr,
     parallelsugar
 Depends:
     R (>= 3.2.2)
