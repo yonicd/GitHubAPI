@@ -1,0 +1,71 @@
+---
+title: "Analysis"
+author: "Yoonjae Jang"
+date: "2016년 10월 20일"
+output: html_document
+---
+
+```{r}
+
+
+devtools::install_github("pumpy7/GitHubAPI")
+library(GitHubAPI)
+token=gitHub_Token_Generator(getOption("github_clientId"),getOption("github_clientSecret"))
+
+commitData.react=getCommitData("https://github.com/facebook/react",token)
+commitData.react.cleanup=cleanUpCommitData(commitData.react)
+```
+
+```{r}
+library(ggplot2)
+library(SnowballC)
+library(wordcloud)
+library(tm)
+library(stringr)
+
+react.commit.data=read.csv("Facebook_React_CommitData.csv")
+
+```
+
+```{r}
+
+
+
+
+
+ggplot(react.commit.data, aes(x=as.Date(commit.date))) +
+  geom_histogram(aes(y=..density..),colour="black",fill="white",bins=50)+
+  geom_density(alpha=.2, fill="#FF6666")+
+  ggtitle("Distribution of the number of commits")+
+  theme(plot.title = element_text(lineheight=.8, face="bold"),axis.title.x = element_text(face="bold",  size=10),axis.title.y=element_text(face="bold",size=10))+
+  xlab("Date")+ylab("Density")
+
+                                                                                        
+
+```
+
+```{r}
+require(RColorBrewer)
+
+pal2 <- brewer.pal(8,"Dark2")
+
+message=as.character(react.commit.data$commit.message)
+
+
+
+
+temp=unlist(tolower(str_split(paste(message,collapse=" "),"\\s")))
+temp2=removePunctuation(tolower(temp))
+temp3=removeWords(temp2,stopwords("english"))
+temp4=unlist(str_split(temp3,"\\s"))
+temp5=temp4[temp4!=""]
+temp6=grep("request||merge||pull",temp5)
+top100=head(sort(table(temp5),decreasing = TRUE),100)
+
+wordcloud(names(top100),top100, scale=c(8,.2),min.freq=10,max.words=Inf, random.order=FALSE, rot.per=.15, colors=pal2)
+
+
+
+
+
+```
