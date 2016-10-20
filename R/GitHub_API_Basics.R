@@ -1,6 +1,5 @@
 devtools::use_package("httr")
 devtools::use_package("jsonlite")
-devtools::use_package("magrittr")
 devtools::use_package("parallelsugar")
 
 #'
@@ -112,8 +111,7 @@ getStargazersUsername=function(repository.url,token)
 #' @export
 changeGitHubRepoURLtoGitHubRepoAPICall=function(url)
 {
-
-  return(paste("https://api.github.com/repos/",paste(url%>%strsplit("/")%>%unlist%>%tail(2),collapse = "/"),sep=""))
+  return(paste("https://api.github.com/repos/",paste(tail(unlist(strsplit(url,split="/")),2),collapse = "/"),sep=""))
 
 }
 
