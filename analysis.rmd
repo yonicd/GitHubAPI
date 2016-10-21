@@ -10,10 +10,14 @@ output: html_document
 
 devtools::install_github("pumpy7/GitHubAPI")
 library(GitHubAPI)
-token=gitHub_Token_Generator(getOption("github_clientId"),getOption("github_clientSecret"))
+
+token=gitHub_Token_Generator(getOption("github_clientID"),getOption("github_clientSecret"))
 
 commitData.react=getCommitData("https://github.com/facebook/react",token)
 commitData.react.cleanup=cleanUpCommitData(commitData.react)
+
+issueData.react
+
 ```
 
 ```{r}
@@ -22,7 +26,9 @@ library(SnowballC)
 library(wordcloud)
 library(tm)
 library(stringr)
-
+library(RColorBrewer)
+library(parallelsugar)
+pal2 <- brewer.pal(8,"Dark2")
 react.commit.data=read.csv("Facebook_React_CommitData.csv")
 
 ```
@@ -34,7 +40,7 @@ react.commit.data=read.csv("Facebook_React_CommitData.csv")
 
 
 ggplot(react.commit.data, aes(x=as.Date(commit.date))) +
-  geom_histogram(aes(y=..density..),colour="black",fill="white",bins=50)+
+  geom_histogram(aes(y=..density..),colour="black",fill="white",bins=500)+
   geom_density(alpha=.2, fill="#FF6666")+
   ggtitle("Distribution of the number of commits")+
   theme(plot.title = element_text(lineheight=.8, face="bold"),axis.title.x = element_text(face="bold",  size=10),axis.title.y=element_text(face="bold",size=10))+
@@ -42,30 +48,81 @@ ggplot(react.commit.data, aes(x=as.Date(commit.date))) +
 
                                                                                         
 
+
 ```
 
 ```{r}
-require(RColorBrewer)
+date=as.Date(react.commit.data$commit.date)
+weekdays=data.frame(days=names(table(weekdays(date))),Freq=as.numeric(table(weekdays(date))))
+ordered.weekdays=weekdays[c(2,6,7,5,1,3,4),]
+ordered.weekdays$days=factor(ordered.weekdays$days,levels = as.character(ordered.weekdays$days))
+ggplot(data=ordered.weekdays, aes(x=days, y=Freq,fill=days)) +geom_bar(colour="black", stat="identity") +  guides(fill=FALSE)
 
-pal2 <- brewer.pal(8,"Dark2")
+```
+
+```{r}
+
+hours=as.POSIXlt(react.commit.data$commit.date,format="%Y-%m-%dT%H:%M:%SZ",tz="PST")$hour
+hours.df=data.frame(hours=names(table(hours)),Freq=as.numeric(table(hours)))
+
+hours.df$hours=factor(hours.df$hours,levels=c(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23))
+
+ggplot(data=hours.df, aes(x=hours,y=Freq)) +geom_bar(colour="black", stat="identity")
+
+```
+
+```{r}
+
+committer.table=sort(table(react.commit.data$committer.login),decreasing = TRUE)
+
+
+calls=paste("https://api.github.com/users/",names(committer.table),sep="")
+companies=mclapply(calls,extract_info,token=token)
+is.FacebookWorker=rep(0,633)
+is.FacebookWorker[grep("facebook",tolower(sapply(companies,function(x){ifelse(length(unlist(x$company))==0,"NA",unlist(x$company))})))]=1
+
+
+committer.df=data.frame(committer=names(committer.table),Freq=as.numeric(committer.table),workAtFacebook=is.FacebookWorker)
+
+ggplot(data=committer.df[1:10,], aes(x=committer,y=Freq,fill=factor(workAtFacebook))) +geom_bar(colour="black", stat="identity")
+
+
+
+
+
+
+
+
+
+
+
+```
+
+```{r}
+
+
+
+
+
+
+
+
+
+```
+
+
+```{r}
 
 message=as.character(react.commit.data$commit.message)
-
-
-
 
 temp=unlist(tolower(str_split(paste(message,collapse=" "),"\\s")))
 temp2=removePunctuation(tolower(temp))
 temp3=removeWords(temp2,stopwords("english"))
 temp4=unlist(str_split(temp3,"\\s"))
 temp5=temp4[temp4!=""]
-temp6=grep("request||merge||pull",temp5)
-top100=head(sort(table(temp5),decreasing = TRUE),100)
+temp6=temp5[-grep("request|merge|pull",temp5)]
 
-wordcloud(names(top100),top100, scale=c(8,.2),min.freq=10,max.words=Inf, random.order=FALSE, rot.per=.15, colors=pal2)
+top100=head(sort(table(temp6),decreasing = TRUE),100)
 
-
-
-
-
+commitMessage.wordcloud=wordcloud(names(top100),top100, scale=c(8,.2),min.freq=10,max.words=Inf, random.order=FALSE, rot.per=.15, colors=pal2)
 ```
