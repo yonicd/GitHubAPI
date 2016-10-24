@@ -2,8 +2,10 @@
 
 export(changeGitHubRepoURLtoGitHubRepoAPICall)
 export(cleanUpCommitData)
+export(cleanUpIssueData)
 export(extract_info)
 export(getCommitData)
+export(getIssueData)
 export(getNumForks)
 export(getNumStargazers)
 export(getStargazersData)

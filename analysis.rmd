@@ -16,7 +16,7 @@ token=gitHub_Token_Generator(getOption("github_clientID"),getOption("github_clie
 commitData.react=getCommitData("https://github.com/facebook/react",token)
 commitData.react.cleanup=cleanUpCommitData(commitData.react)
 
-issueData.react
+issueData.test=getIssue
 
 ```
 

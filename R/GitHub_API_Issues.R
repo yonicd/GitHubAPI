@@ -32,7 +32,7 @@ getIssueData=function(repository.url,token)
 
 
 
-#' Clean up the issue data provided by getCommitData function
+#' Clean up the issue data provided by getIssueData function
 #'
 #' The getIssueData function returns data in nasty nested list, so cleaning up is necessary
 #' This function gets rid of unnecessary information and returns issue title, issue author,
