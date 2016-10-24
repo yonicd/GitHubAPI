@@ -7,22 +7,17 @@
 #' @export
 getIssueData=function(repository.url,token)
 {
-
   issue.url=paste(repository.url,"/issues",sep="")
   temp=try(readLines(issue.url))
   if(!inherits(temp,'try-error'))
   {
     parsed=XML::htmlParse(temp)
     n=sum(as.numeric(unlist(strsplit(split="Open|Closed",gsub("[,\n ]+","",XML::xpathSApply(parsed,"//div[@class='table-list-header-toggle states float-left pl-3']",XML::xmlValue))))))
+    api.url=changeGitHubRepoURLtoGitHubRepoAPICall(repository.url)
+    command=paste(api.url,"/issues/",sep="")
+    issues.url=paste(command,1:n,sep="")
+    issue.list=LimitConsciousExtraction("extract_info",issues.url,token=token)
   }
-
-  api.url=changeGitHubRepoURLtoGitHubRepoAPICall(repository.url)
-
-  command=paste(api.url,"/issues/",sep="")
-  issues.url=paste(command,1:n,sep="")
-
-  issue.list=parallelsugar::mclapply(issues.url,extract_info,token=token)
-
   return(issue.list)
 }
 

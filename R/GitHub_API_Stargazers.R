@@ -26,12 +26,13 @@ getNumStargazers=function(repository.url,token)
 #' @export
 getStargazersData=function(repository.url,token)
 {
-  repository.url="https://github.com/ajinabraham/Xenotix-Python-Keylogger"
+
   n=getNumStargazers(repository.url,token)
   api.url=changeGitHubRepoURLtoGitHubRepoAPICall(repository.url)
   command=paste(api.url,"/stargazers?per_page=100&page=",sep="")
   pages.url=paste(command,(1:(n/100+1)),sep="")
-  Stargazer.list=parallelsugar::mclapply(pages.url,extract_info,token=token)
+
+  Stargazer.list=LimitConsciousExtraction("extract_info",pages.url,token)
   Stargazer.df=do.call(rbind.data.frame, Stargazer.list)
   Stargazer.df.final=as.data.frame(apply(Stargazer.df,2,unlist,use.names=FALSE),stringsAsFactors = FALSE)
 

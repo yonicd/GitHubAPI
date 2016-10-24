@@ -11,15 +11,14 @@ getCommitData=function(repository.url,token)
   if(!inherits(temp,'try-error'))
   {
     parsed=XML::htmlParse(temp)
-    n=as.numeric(gsub("[,\n ]+","",XML::xpathSApply(parsed,"//li[@class='commits']//span[@class='num text-emphasized']",xmlValue)))
+    n=as.numeric(gsub("[,\n ]+","",XML::xpathSApply(parsed,"//li[@class='commits']//span[@class='num text-emphasized']",XML::xmlValue)))
+    api.url=changeGitHubRepoURLtoGitHubRepoAPICall(repository.url)
+    command=paste(api.url,"/commits?per_page=100&page=",sep="")
+    commitPages.url=paste(command,(1:(n/100+1)),sep="")
+    commit.list=LimitConsciousExtraction("extract_info",commitPages.url,token=token)
   }
-
-  api.url=changeGitHubRepoURLtoGitHubRepoAPICall(repository.url)
-  command=paste(api.url,"/commits?per_page=100&page=",sep="")
-  pages.url=paste(command,(1:(n/100+1)),sep="")
-  commit.list=parallelsugar::mclapply(pages.url,extract_info,token=token)
-
   return(commit.list)
+
 }
 
 
