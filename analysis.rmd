@@ -8,6 +8,10 @@ output: html_document
 ```{r}
 
 
+load("C:/Users/greg/Desktop/default_options.rda")
+options(default_options)
+
+
 devtools::install_github("pumpy7/GitHubAPI")
 library(GitHubAPI)
 
@@ -16,7 +20,7 @@ token=gitHub_Token_Generator(getOption("github_clientID"),getOption("github_clie
 commitData.react=getCommitData("https://github.com/facebook/react",token)
 commitData.react.cleanup=cleanUpCommitData(commitData.react)
 
-issueData.test=getIssue
+issueData.test=getIssueData("https://github.com/ajinabraham/Mobile-Security-Framework-MobSF",token)
 
 ```
 
