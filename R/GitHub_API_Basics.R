@@ -104,6 +104,7 @@ getRate=function(token)
 #' @export
 LimitConsciousExtraction=function(FUN,vectors,token)
 {
+
   startEndMatrix=divideBy5000(vectors,token)
   n=nrow(startEndMatrix)
 
@@ -123,6 +124,11 @@ LimitConsciousExtraction=function(FUN,vectors,token)
 
   }
   eval(parse(text=paste("data=c(",paste("result",1:n,collapse=",",sep=""),")",sep="")))
+  if(length(data)==1)
+  {
+    return(data[[1]])
+  }
+
 
 
   return(data)
