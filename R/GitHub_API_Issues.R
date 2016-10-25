@@ -35,34 +35,37 @@ getIssueData=function(repository.url,token)
 #' @export
 cleanUpIssueData=function(issueData)
 {
-  issue.title=unlist(sapply(issueData,function(x){x$title}))
-  issue.author=unlist(sapply(issueData,function(x){x$user$login}))
-  issue.state=unlist(sapply(issueData,function(x){x$state}))
+
+
+
+  issue.title=unlist(sapply(issueData,function(x){x["title"]}))
+  issue.author=unlist(sapply(issueData,function(x){x["user"]["login"]}))
+  issue.state=unlist(sapply(issueData,function(x){x["state"]}))
   issue.labels= sapply(issueData, function(x){
-           ifelse(length(unlist(x$labels$name))!=0,paste(unlist(x$labels$name),collapse=", "),"NA")
+           ifelse(length(unlist(x["labels"]["name"]))!=0,paste(unlist(x["labels"]["name"]),collapse=", "),"NA")
          }
   )
   issue.assignee=sapply(issueData, function(x){
-    ifelse(length(x$assignee$login)!=0,x$assignee$login,"NA")
+    ifelse(length(x["assignee"]["login"])!=0,x["assignee"]["login"],"NA")
   }
   )
   issue.milestone=sapply(issueData, function(x){
-    ifelse(length(x$milestone)!=0,x$milestone,"NA")
+    ifelse(length(x["milestone"])!=0,x["milestone"],"NA")
   }
   )
 
   issue.numComments=sapply(issueData, function(x){
-    ifelse(length(x$comments)!=0,as.numeric(x$comments),"NA")
+    ifelse(length(x["comments"])!=0,as.numeric(x["comments"]),"NA")
   }
   )
 
   issue.createdDate=sapply(issueData, function(x){
-    ifelse(length(x$created_at)!=0,x$created_at,"NA")
+    ifelse(length(x["created_at"])!=0,x["created_at"],"NA")
   }
   )
 
   issue.bodyMessage=sapply(issueData, function(x){
-    ifelse(length(x$body)!=0,x$body,"NA")
+    ifelse(length(x["body"])!=0,x["body"],"NA")
   }
   )
 
