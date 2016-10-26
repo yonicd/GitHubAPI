@@ -107,18 +107,15 @@ LimitConsciousExtraction=function(FUN,vectors,token)
   startEndMatrix=divideBy5000(vectors,token)
   n=nrow(startEndMatrix)
 
-
   for(i in 1:n)
   {
     if(i!=1)
     {
       sleep(token)
     }
-
     start=startEndMatrix[i,1]
     end=startEndMatrix[i,2]
     temp=vectors[start:end]
-
     text=paste("result",i,"=","try(parallelsugar::mclapply(temp,",FUN,",token=token))",sep="")
     eval(parse(text=text))
 
@@ -147,14 +144,9 @@ divideBy5000=function(x,token)
 {
   remainingRate=getRate(token)$remaining
   n=length(x)
-
-
-  numIteration=n%/%5000+as.numeric(n%%5000!=0)
+  numIteration=n%/%5000+as.numeric(n%%5000!=0)+as.numeric(remainingRate<n)
   temp=matrix(nrow=numIteration,ncol=2)
-
   nextStart=0
-
-
     for(i in  1:numIteration)
     {
       if(i==1)
@@ -175,5 +167,4 @@ divideBy5000=function(x,token)
       temp[i,2]=end
     }
     return(temp)
-
 }

@@ -7,6 +7,7 @@
 #' @export
 getCommitData=function(repository.url,token)
 {
+
   temp=try(readLines(repository.url))
   if(!inherits(temp,'try-error'))
   {
