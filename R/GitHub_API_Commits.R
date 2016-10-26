@@ -7,7 +7,6 @@
 #' @export
 getCommitData=function(repository.url,token)
 {
-
   temp=try(readLines(repository.url))
   if(!inherits(temp,'try-error'))
   {
@@ -18,9 +17,11 @@ getCommitData=function(repository.url,token)
     commitPages.url=paste(command,(1:(n/100+1)),sep="")
     commit.list=LimitConsciousExtraction("extract_info",commitPages.url,token=token)
   }
+
   return(commit.list)
 
 }
+
 
 
 #' Clean up the commit data provided by getCommitData function
