@@ -7,10 +7,10 @@
 getOrgsRepoUrls(orgs.url, token)
 }
 \arguments{
-\item{repository.url, }{token}
+\item{orgs.url, }{token}
 }
 \value{
-The number of forks for a particular repository
+URLs of all repositories of the organization
 }
 \description{
 All repositories of the

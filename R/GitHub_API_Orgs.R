@@ -23,8 +23,8 @@ getOrgsData=function(orgs.url,token)
 #'
 #' All repositories of the
 #'
-#' @param repository.url, token
-#' @return The number of forks for a particular repository
+#' @param orgs.url, token
+#' @return URLs of all repositories of the organization
 #' @export
 #'
 getOrgsRepoUrls=function(orgs.url,token)
@@ -39,6 +39,23 @@ getOrgsRepoUrls=function(orgs.url,token)
 
 
   return(as.character(unlist(sapply(repos.url,function(x){x["html_url"]}))))
+
+}
+
+
+#' Return urls of 10 repositories with the most stars for the given organization
+#'
+#' Extracts number of stars for all repositores belonging to the organization then return the top 10
+#'
+#' @param orgs.url, token
+#' @return ten repositories urls with the most stars
+#' @export
+#'
+getOrgsTop10Repos=function(orgs.url,token)
+{
+  all.repos=getOrgsRepoUrls(orgs.url,token)
+  numStars=sapply(all.repos,getNumStargazers,token)
+  return(names(head(sort(numStars,decreasing = TRUE),10)))
 
 }
 

@@ -7,7 +7,7 @@
 getRate(token)
 }
 \value{
-number of calls left for the given token
+The number of calls left for the given token
 }
 \description{
 Check Remaining API call limit.

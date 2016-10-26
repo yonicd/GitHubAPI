@@ -7,7 +7,7 @@
 sleep(token)
 }
 \value{
-puts system in to sleep
+Puts system in to sleep
 }
 \description{
 Put system into sleep until GitHub API rate limit has been refreshed.

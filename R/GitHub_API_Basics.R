@@ -65,7 +65,7 @@ changeGitHubRepoURLtoGitHubRepoAPICall=function(url)
 #'
 #'
 #' @param NONE
-#' @return puts system in to sleep
+#' @return Puts system in to sleep
 #' @export
 sleep=function(token)
 {
@@ -85,7 +85,7 @@ sleep=function(token)
 #'
 #'
 #' @param token
-#' @return number of calls left for the given token
+#' @return The number of calls left for the given token
 #' @export
 getRate=function(token)
 {
@@ -104,9 +104,9 @@ getRate=function(token)
 #' @export
 LimitConsciousExtraction=function(FUN,vectors,token)
 {
-
   startEndMatrix=divideBy5000(vectors,token)
   n=nrow(startEndMatrix)
+
 
   for(i in 1:n)
   {
@@ -119,7 +119,7 @@ LimitConsciousExtraction=function(FUN,vectors,token)
     end=startEndMatrix[i,2]
     temp=vectors[start:end]
 
-    text=paste("result",i,"=","parallelsugar::mclapply(temp,",FUN,",token=token)",sep="")
+    text=paste("result",i,"=","try(parallelsugar::mclapply(temp,",FUN,",token=token))",sep="")
     eval(parse(text=text))
 
   }
