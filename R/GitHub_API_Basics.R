@@ -72,6 +72,7 @@ sleep=function(token)
   rate=getRate(token)
   rateReset=as.POSIXct(rate$reset,origin="1970-01-01")
   sleepTime=as.numeric(rateReset-Sys.time())*60
+  message("System in Sleep")
   Sys.sleep(sleepTime)
 
 }
