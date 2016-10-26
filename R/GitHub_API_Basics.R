@@ -35,7 +35,8 @@ extract_info=function(apiCall,token)
     content=jsonlite::fromJSON(jsonlite::toJSON(request.content))
     return(content)
   }
-  return(request)
+  message(apiCall)
+  return(apiCall)
 }
 
 
