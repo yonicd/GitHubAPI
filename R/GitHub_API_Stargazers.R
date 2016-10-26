@@ -8,9 +8,9 @@
 #' @export
 getNumStargazers=function(repository.url,token)
 {
-  repo=try(extract_info(changeGitHubRepoURLtoGitHubRepoAPICall(repository.url),token))
 
-  return(repo$stargazers_count)
+  repo=try(extract_info(changeGitHubRepoURLtoGitHubRepoAPICall(repository.url),token))
+  return(repo["stargazers_count"])
 
 }
 

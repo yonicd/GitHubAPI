@@ -34,8 +34,7 @@ getOrgsRepoUrls=function(orgs.url,token)
   command=paste(orgsData$repos_url,"?per_page=100&page=",sep="")
   repos.command=paste(command,(1:(n/100+1)),sep="")
   repos.url=LimitConsciousExtraction("extract_info",repos.command,token=token)
-
-  return(as.character(unlist(sapply(repos.url,function(x){x["html_url"]}))))
+  return(as.character(unlist(sapply(unlist(repos.url,recursive = FALSE),function(x){x["html_url"]}))))
 
 }
 
@@ -51,8 +50,7 @@ getOrgsRepoUrls=function(orgs.url,token)
 getOrgsTop10Repos=function(orgs.url,token)
 {
   all.repos=getOrgsRepoUrls(orgs.url,token)
-  numStars=sapply(all.repos,getNumStargazers,token)
+  numStars=unlist(sapply(all.repos,getNumStargazers,token))
   return(names(head(sort(numStars,decreasing = TRUE),10)))
-
 }
 
