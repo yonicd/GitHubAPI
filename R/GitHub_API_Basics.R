@@ -34,7 +34,7 @@ extract_info=function(apiCall,token)
   {
     request.content=httr::content(request)
     # content=jsonlite::fromJSON(jsonlite::toJSON(request.content))
-    return(content)
+    return(request.content)
   }
   return(apiCall)
 }
