@@ -29,14 +29,11 @@ getOrgsData=function(orgs.url,token)
 #'
 getOrgsRepoUrls=function(orgs.url,token)
 {
-
-
   orgsData=getOrgsData(orgs.url,token)
   n=orgsData$public_repos
   command=paste(orgsData$repos_url,"?per_page=100&page=",sep="")
   repos.command=paste(command,(1:(n/100+1)),sep="")
   repos.url=LimitConsciousExtraction("extract_info",repos.command,token=token)
-
 
   return(as.character(unlist(sapply(repos.url,function(x){x["html_url"]}))))
 
