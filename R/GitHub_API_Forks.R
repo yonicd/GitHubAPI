@@ -10,8 +10,9 @@ getNumForks=function(repository.url,token)
 {
 
   repo=try(extract_info(changeGitHubRepoURLtoGitHubRepoAPICall(repository.url),token))
+  temp=as.numeric(repo["forks_count"])
 
-  return(repo$forks_count)
+  return(temp)
 
 }
 

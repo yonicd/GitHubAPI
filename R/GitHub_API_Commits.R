@@ -16,9 +16,11 @@ getCommitData=function(repository.url,token)
     command=paste(api.url,"/commits?per_page=100&page=",sep="")
     commitPages.url=paste(command,(1:(n/100+1)),sep="")
     commit.list=LimitConsciousExtraction("extract_info",commitPages.url,token=token)
-  }
 
-  return(commit.list)
+
+  }
+  return(unlist(commit.list,recursive=FALSE))
+  # return(commit.list)
 
 }
 
@@ -36,10 +38,11 @@ getCommitData=function(repository.url,token)
 cleanUpCommitData=function(commitData)
 {
 
+
   commit.sha=unlist(sapply(commitData,function(x){x$sha}))
   commit.message=unlist(sapply(commitData,
                                function(x){
-                                  ifelse(sapply(x$commit$message,nchar)!=0,x$commit$message,"NA")
+                                  ifelse(length(x$commit$message)!=0,x$commit$message,"NA")
                                 }
                           )   )
 
@@ -48,15 +51,16 @@ cleanUpCommitData=function(commitData)
   author.email=unlist(sapply(commitData,function(x){x$commit$author$email}))
   author.login=unlist(sapply(commitData,
                              function(x){
-                               ifelse(sapply(x$author$login,nchar)!=0,x$author$login,"NA")
+                               ifelse(length(x$author$login)!=0,x$author$login,"NA")
                              }
   )   )
+
 
   committer.name=unlist(sapply(commitData,function(x){x$commit$committer$name}))
   committer.email=unlist(sapply(commitData,function(x){x$commit$committer$email}))
   committer.login=unlist(sapply(commitData,
                                 function(x){
-                                  ifelse(sapply(x$committer$login,nchar)!=0,x$committer$login,"NA")
+                                  ifelse(length(x$committer$login)!=0,x$committer$login,"NA")
                                 }
   )   )
 
@@ -72,6 +76,5 @@ cleanUpCommitData=function(commitData)
                     commit.message=commit.message,
                     stringsAsFactors = FALSE))
 }
-
 
 

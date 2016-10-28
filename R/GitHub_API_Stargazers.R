@@ -10,7 +10,9 @@ getNumStargazers=function(repository.url,token)
 {
 
   repo=try(extract_info(changeGitHubRepoURLtoGitHubRepoAPICall(repository.url),token))
-  return(repo["stargazers_count"])
+  temp=as.numeric(repo["stargazers_count"])
+
+  return(temp)
 
 }
 

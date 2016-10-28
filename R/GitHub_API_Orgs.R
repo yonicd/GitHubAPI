@@ -49,8 +49,11 @@ getOrgsRepoUrls=function(orgs.url,token)
 #'
 getOrgsTop10Repos=function(orgs.url,token)
 {
+
   all.repos=getOrgsRepoUrls(orgs.url,token)
   numStars=unlist(sapply(all.repos,getNumStargazers,token))
-  return(names(head(sort(numStars,decreasing = TRUE),10)))
+
+
+  return(head(sort(numStars,decreasing = TRUE),10))
 }
 
