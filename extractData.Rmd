@@ -6,6 +6,26 @@ output: html_document
 ---
 
 ```{r}
+require(mailR)
+
+sendMailToMe=function(subject,body,attachment=NULL)
+{
+  send.mail(from = "yoonjaej@gmail.com",
+            to = "yoonjaej@gmail.com",
+            subject = subject,
+            body = body,
+            smtp = list(host.name = "smtp.gmail.com", port = 465,user.name="yoonjaej@gmail.com",passwd="Yj890120/",ssl=T),
+            authenticate = TRUE, attach.files=attachment, send = TRUE)
+}
+
+
+sendMailToMe("test","test")
+
+```
+
+
+
+```{r}
 
 
 devtools::install_github("pumpy7/GitHubAPI")
@@ -130,6 +150,7 @@ for(i in 1 : length(google.repo.urls))
 }
 
 options(warn = oldw)
+sendMailToMe("google done","google done")
 
 
 ```
@@ -159,6 +180,7 @@ for(i in 1 : length(airbnb.repo.urls))
 }
 
 options(warn = oldw)
+sendMailToMe("airbnb done","airbnb done")
 
 ```
 
@@ -188,6 +210,7 @@ for(i in 1 : length(twbs.repo.urls))
 
 options(warn = oldw)
 
+sendMailToMe("twbs done","twbs done")
 
 ```
 
@@ -219,7 +242,7 @@ for(i in 1 : length(github.repo.urls))
 
 options(warn = oldw)
 
-
+sendMailToMe("github","github done")
 
 ```
 
@@ -251,6 +274,7 @@ for(i in 1 : length(mozilla.repo.urls))
 
 options(warn = oldw)
 
+sendMailToMe("mozilla done","mozilla done")
 
 ```
 
@@ -282,7 +306,7 @@ for(i in 1 : length(twitter.repo.urls))
 
 options(warn = oldw)
 
-
+sendMailToMe("twitter done","twitter done")
 
 
 ```
