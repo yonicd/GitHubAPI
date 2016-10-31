@@ -37,8 +37,6 @@ getCommitData=function(repository.url,token)
 #' @export
 cleanUpCommitData=function(commitData)
 {
-
-
   commit.sha=unlist(sapply(commitData,function(x){x$sha}))
   commit.message=unlist(sapply(commitData,
                                function(x){

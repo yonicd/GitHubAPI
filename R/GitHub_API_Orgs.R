@@ -9,6 +9,7 @@
 #'
 getOrgsData=function(orgs.url,token)
 {
+
   orgs.name=tail(unlist(strsplit(orgs.url,"/")),1)
   api.url=paste("https://api.github.com/orgs/",orgs.name,sep="")
   temp=try(extract_info(api.url,token))
@@ -34,7 +35,10 @@ getOrgsRepoUrls=function(orgs.url,token)
   command=paste(orgsData$repos_url,"?per_page=100&page=",sep="")
   repos.command=paste(command,(1:(n/100+1)),sep="")
   repos.url=LimitConsciousExtraction("extract_info",repos.command,token=token)
-  return(as.character(unlist(sapply(unlist(repos.url,recursive = FALSE),function(x){x["html_url"]}))))
+  return(as.character(unlist(sapply(repos.url,function(x){x["html_url"]}))))
+
+
+
 
 }
 

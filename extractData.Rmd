@@ -1,0 +1,288 @@
+---
+title: "extractData"
+author: "Yoonjae Jang"
+date: "2016년 10월 31일"
+output: html_document
+---
+
+```{r}
+
+
+devtools::install_github("pumpy7/GitHubAPI")
+library(GitHubAPI)
+
+token=gitHub_Token_Generator("4751d2617e956c73fb9b","62c50867a31097a338f6ff8fe8d0aeea696e8dbb")
+
+
+```
+
+```{r}
+
+facebook.repo.urls=getOrgsTop10Repos("https://github.com/facebook",token)
+repo.names=sapply(strsplit(names(facebook.repo.urls),"/"),tail,1)
+repo.names=gsub("-",".",repo.names)
+
+oldw <- getOption("warn")
+options(warn = -1)
+for(i in 1 : length(facebook.repo.urls))
+{
+  message(paste(repo.names[i],"Commit",sep=" : "))
+  try(eval(parse(text=paste(repo.names[i],".commitData=getCommitData(names(facebook.repo.urls)[",i,"],token)",sep=""))))
+  
+  message(paste(repo.names[i],"Clean up Commit Data",sep=" : "))
+  try(eval(parse(text=paste(repo.names[i],".commitData.cleanup=cleanUpCommitData(",repo.names[i],".commitData)",sep=""))))
+  
+  message(paste(repo.names[i],"Issue",sep=" : "))
+  try(eval(parse(text=paste(repo.names[i],".issueData=getIssueData(names(facebook.repo.urls)[",i,"],token)",sep=""))))
+  
+  message(paste(repo.names[i],"Clean up Issue Data",sep=" : "))
+  try(eval(parse(text=paste(repo.names[i],".issueData.cleanup=cleanUpIssueData(",repo.names[i],".issueData)",sep=""))))
+  gc()
+}
+
+options(warn = oldw)
+
+```
+
+```{r}
+
+AsyncDisplayKit.commitData.cleanup$repo.name="AsyncDisplayKit"
+AsyncDisplayKit.issueData.cleanup$repo.name="AsyncDisplayKit"
+
+
+draft.js.issueData.cleanup$repo.name="draft.js"
+draft.js.commitData.cleanup$repo.name="draft.js"
+
+flow.commitData.cleanup$repo.name="flow"
+flow.issueData.cleanup$repo.name="flow"
+
+flux.issueData.cleanup$repo.name="flux"
+flux.commitData.cleanup$repo.name="flux"
+
+fresco.commitData.cleanup$repo.name="fresco"
+fresco.issueData.cleanup$repo.name="fresco"
+
+hhvm.commitData.cleanup$repo.name="hhvm"
+hhvm.issueData.cleanup$repo.name="hhvm"
+
+immutable.js.commitData.cleanup$repo.name="immutable.js"
+immutable.js.issueData.cleanup$repo.name="immutable.js"
+
+pop.commitData.cleanup$repo.name="pop"
+pop.issueData.cleanup$repo.name="pop"
+
+react.commitData.cleanup$repo.name="react"
+react.issueData.cleanup$repo.name="react"
+
+react.native.issueData.cleanup$repo.name="react.native"
+react.native.commitData.cleanup$repo.name="react.native"
+
+
+facebook.commit.combined=rbind(AsyncDisplayKit.commitData.cleanup,
+                               draft.js.commitData.cleanup,
+                               flow.commitData.cleanup,
+                               flux.commitData.cleanup,
+                               fresco.commitData.cleanup,
+                               hhvm.commitData.cleanup,
+                               immutable.js.commitData.cleanup,
+                               pop.commitData.cleanup,
+                               react.commitData.cleanup,
+                               react.native.commitData.cleanup)
+
+
+facebook.issue.combined=rbind(AsyncDisplayKit.issueData.cleanup,
+                               draft.js.issueData.cleanup,
+                               flow.issueData.cleanup,
+                               flux.issueData.cleanup,
+                               fresco.issueData.cleanup,
+                               hhvm.issueData.cleanup,
+                               immutable.js.issueData.cleanup,
+                               pop.issueData.cleanup,
+                               react.issueData.cleanup,
+                               react.native.issueData.cleanup)
+
+
+
+```
+
+```{r}
+
+google.repo.urls=getOrgsTop10Repos("https://github.com/google",token)
+repo.names=sapply(strsplit(names(google.repo.urls),"/"),tail,1)
+repo.names=gsub("-",".",repo.names)
+
+oldw <- getOption("warn")
+options(warn = -1)
+for(i in 1 : length(google.repo.urls))
+{
+  message(paste(repo.names[i],"Commit",sep=" : "))
+  try(eval(parse(text=paste(repo.names[i],".commitData=getCommitData(names(google.repo.urls)[",i,"],token)",sep=""))))
+  
+  message(paste(repo.names[i],"Clean up Commit Data",sep=" : "))
+  try(eval(parse(text=paste(repo.names[i],".commitData.cleanup=cleanUpCommitData(",repo.names[i],".commitData)",sep=""))))
+  
+  message(paste(repo.names[i],"Issue",sep=" : "))
+  try(eval(parse(text=paste(repo.names[i],".issueData=getIssueData(names(google.repo.urls)[",i,"],token)",sep=""))))
+  
+  message(paste(repo.names[i],"Clean up Issue Data",sep=" : "))
+  try(eval(parse(text=paste(repo.names[i],".issueData.cleanup=cleanUpIssueData(",repo.names[i],".issueData)",sep=""))))
+  gc()
+}
+
+options(warn = oldw)
+
+
+```
+
+```{r}
+
+airbnb.repo.urls=getOrgsTop10Repos("https://github.com/airbnb",token)
+repo.names=sapply(strsplit(names(airbnb.repo.urls),"/"),tail,1)
+repo.names=gsub("-",".",repo.names)
+
+oldw <- getOption("warn")
+options(warn = -1)
+for(i in 1 : length(airbnb.repo.urls))
+{
+  message(paste(repo.names[i],"Commit",sep=" : "))
+  try(eval(parse(text=paste(repo.names[i],".commitData=getCommitData(names(airbnb.repo.urls)[",i,"],token)",sep=""))))
+  
+  message(paste(repo.names[i],"Clean up Commit Data",sep=" : "))
+  try(eval(parse(text=paste(repo.names[i],".commitData.cleanup=cleanUpCommitData(",repo.names[i],".commitData)",sep=""))))
+  
+  message(paste(repo.names[i],"Issue",sep=" : "))
+  try(eval(parse(text=paste(repo.names[i],".issueData=getIssueData(names(airbnb.repo.urls)[",i,"],token)",sep=""))))
+  
+  message(paste(repo.names[i],"Clean up Issue Data",sep=" : "))
+  try(eval(parse(text=paste(repo.names[i],".issueData.cleanup=cleanUpIssueData(",repo.names[i],".issueData)",sep=""))))
+  gc()
+}
+
+options(warn = oldw)
+
+```
+
+```{r}
+
+twbs.repo.urls=getOrgsTop10Repos("https://github.com/twbs",token)
+repo.names=sapply(strsplit(names(twbs.repo.urls),"/"),tail,1)
+repo.names=gsub("-",".",repo.names)
+
+oldw <- getOption("warn")
+options(warn = -1)
+for(i in 1 : length(twbs.repo.urls))
+{
+  message(paste(repo.names[i],"Commit",sep=" : "))
+  try(eval(parse(text=paste(repo.names[i],".commitData=getCommitData(names(twbs.repo.urls)[",i,"],token)",sep=""))))
+  
+  message(paste(repo.names[i],"Clean up Commit Data",sep=" : "))
+  try(eval(parse(text=paste(repo.names[i],".commitData.cleanup=cleanUpCommitData(",repo.names[i],".commitData)",sep=""))))
+  
+  message(paste(repo.names[i],"Issue",sep=" : "))
+  try(eval(parse(text=paste(repo.names[i],".issueData=getIssueData(names(twbs.repo.urls)[",i,"],token)",sep=""))))
+  
+  message(paste(repo.names[i],"Clean up Issue Data",sep=" : "))
+  try(eval(parse(text=paste(repo.names[i],".issueData.cleanup=cleanUpIssueData(",repo.names[i],".issueData)",sep=""))))
+  gc()
+}
+
+options(warn = oldw)
+
+
+```
+
+```{r}
+
+
+
+github.repo.urls=getOrgsTop10Repos("https://github.com/github",token)
+repo.names=sapply(strsplit(names(github.repo.urls),"/"),tail,1)
+repo.names=gsub("-",".",repo.names)
+
+oldw <- getOption("warn")
+options(warn = -1)
+for(i in 1 : length(github.repo.urls))
+{
+  message(paste(repo.names[i],"Commit",sep=" : "))
+  try(eval(parse(text=paste(repo.names[i],".commitData=getCommitData(names(github.repo.urls)[",i,"],token)",sep=""))))
+  
+  message(paste(repo.names[i],"Clean up Commit Data",sep=" : "))
+  try(eval(parse(text=paste(repo.names[i],".commitData.cleanup=cleanUpCommitData(",repo.names[i],".commitData)",sep=""))))
+  
+  message(paste(repo.names[i],"Issue",sep=" : "))
+  try(eval(parse(text=paste(repo.names[i],".issueData=getIssueData(names(github.repo.urls)[",i,"],token)",sep=""))))
+  
+  message(paste(repo.names[i],"Clean up Issue Data",sep=" : "))
+  try(eval(parse(text=paste(repo.names[i],".issueData.cleanup=cleanUpIssueData(",repo.names[i],".issueData)",sep=""))))
+  gc()
+}
+
+options(warn = oldw)
+
+
+
+```
+
+```{r}
+
+
+
+mozilla.repo.urls=getOrgsTop10Repos("https://github.com/mozilla",token)
+repo.names=sapply(strsplit(names(mozilla.repo.urls),"/"),tail,1)
+repo.names=gsub("-",".",repo.names)
+
+oldw <- getOption("warn")
+options(warn = -1)
+for(i in 1 : length(mozilla.repo.urls))
+{
+  message(paste(repo.names[i],"Commit",sep=" : "))
+  try(eval(parse(text=paste(repo.names[i],".commitData=getCommitData(names(mozilla.repo.urls)[",i,"],token)",sep=""))))
+  
+  message(paste(repo.names[i],"Clean up Commit Data",sep=" : "))
+  try(eval(parse(text=paste(repo.names[i],".commitData.cleanup=cleanUpCommitData(",repo.names[i],".commitData)",sep=""))))
+  
+  message(paste(repo.names[i],"Issue",sep=" : "))
+  try(eval(parse(text=paste(repo.names[i],".issueData=getIssueData(names(mozilla.repo.urls)[",i,"],token)",sep=""))))
+  
+  message(paste(repo.names[i],"Clean up Issue Data",sep=" : "))
+  try(eval(parse(text=paste(repo.names[i],".issueData.cleanup=cleanUpIssueData(",repo.names[i],".issueData)",sep=""))))
+  gc()
+}
+
+options(warn = oldw)
+
+
+```
+
+```{r}
+
+
+
+twitter.repo.urls=getOrgsTop10Repos("https://github.com/twitter",token)
+repo.names=sapply(strsplit(names(twitter.repo.urls),"/"),tail,1)
+repo.names=gsub("-",".",repo.names)
+
+oldw <- getOption("warn")
+options(warn = -1)
+for(i in 1 : length(twitter.repo.urls))
+{
+  message(paste(repo.names[i],"Commit",sep=" : "))
+  try(eval(parse(text=paste(repo.names[i],".commitData=getCommitData(names(twitter.repo.urls)[",i,"],token)",sep=""))))
+  
+  message(paste(repo.names[i],"Clean up Commit Data",sep=" : "))
+  try(eval(parse(text=paste(repo.names[i],".commitData.cleanup=cleanUpCommitData(",repo.names[i],".commitData)",sep=""))))
+  
+  message(paste(repo.names[i],"Issue",sep=" : "))
+  try(eval(parse(text=paste(repo.names[i],".issueData=getIssueData(names(twitter.repo.urls)[",i,"],token)",sep=""))))
+  
+  message(paste(repo.names[i],"Clean up Issue Data",sep=" : "))
+  try(eval(parse(text=paste(repo.names[i],".issueData.cleanup=cleanUpIssueData(",repo.names[i],".issueData)",sep=""))))
+  gc()
+}
+
+options(warn = oldw)
+
+
+
+
+```

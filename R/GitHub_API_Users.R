@@ -13,3 +13,22 @@ getUserdata=function(username,token)
   return(data)
 }
 
+
+
+#' Get company of the given user
+#'
+#'
+#' @param username,token
+#' @return company name
+#' @export
+getUserWork=function(username,token)
+{
+
+  username="pumpy7"
+  temp=as.character(getUserdata(username,token)["company"])
+  return(ifelse(temp!="NULL",temp,"NA"))
+
+}
+
+
+
