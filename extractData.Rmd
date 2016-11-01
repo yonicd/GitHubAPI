@@ -57,6 +57,7 @@ for(i in 1 : length(facebook.repo.urls))
   
   message(paste(repo.names[i],"Clean up Issue Data",sep=" : "))
   try(eval(parse(text=paste(repo.names[i],".issueData.cleanup=cleanUpIssueData(",repo.names[i],".issueData)",sep=""))))
+  
   gc()
 }
 

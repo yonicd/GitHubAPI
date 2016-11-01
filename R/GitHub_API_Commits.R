@@ -17,9 +17,18 @@ getCommitData=function(repository.url,token)
     commitPages.url=paste(command,(1:(n/100+1)),sep="")
     commit.list=LimitConsciousExtraction("extract_info",commitPages.url,token=token)
 
+    if(n>1)
+    {
+      return(unlist(commit.list,recursive=FALSE))
+    }else {
+      return(commit.list)
+    }
+
 
   }
-  return(unlist(commit.list,recursive=FALSE))
+
+
+
   # return(commit.list)
 
 }
