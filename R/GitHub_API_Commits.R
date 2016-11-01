@@ -7,6 +7,7 @@
 #' @export
 getCommitData=function(repository.url,token)
 {
+
   temp=try(readLines(repository.url))
   if(!inherits(temp,'try-error'))
   {
@@ -14,10 +15,10 @@ getCommitData=function(repository.url,token)
     n=as.numeric(gsub("[,\n ]+","",XML::xpathSApply(parsed,"//li[@class='commits']//span[@class='num text-emphasized']",XML::xmlValue)))
     api.url=changeGitHubRepoURLtoGitHubRepoAPICall(repository.url)
     command=paste(api.url,"/commits?per_page=100&page=",sep="")
-    commitPages.url=paste(command,(1:(n/100+1)),sep="")
+    commitPages.url=paste(command,(1:(n%/%100+1)),sep="")
     commit.list=LimitConsciousExtraction("extract_info",commitPages.url,token=token)
 
-    if(n>1)
+    if((n%/%100+1)>1)
     {
       return(unlist(commit.list,recursive=FALSE))
     }else {

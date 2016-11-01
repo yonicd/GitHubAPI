@@ -19,7 +19,6 @@ sendMailToMe=function(subject,body,attachment=NULL)
 }
 
 
-sendMailToMe("test","test")
 
 ```
 
@@ -136,6 +135,7 @@ oldw <- getOption("warn")
 options(warn = -1)
 for(i in 1 : length(google.repo.urls))
 {
+  
   message(paste(repo.names[i],"Commit",sep=" : "))
   try(eval(parse(text=paste(repo.names[i],".commitData=getCommitData(names(google.repo.urls)[",i,"],token)",sep=""))))
   
@@ -218,7 +218,6 @@ sendMailToMe("twbs done","twbs done")
 ```{r}
 
 
-
 github.repo.urls=getOrgsTop10Repos("https://github.com/github",token)
 repo.names=sapply(strsplit(names(github.repo.urls),"/"),tail,1)
 repo.names=gsub("-",".",repo.names)
@@ -238,6 +237,7 @@ for(i in 1 : length(github.repo.urls))
   
   message(paste(repo.names[i],"Clean up Issue Data",sep=" : "))
   try(eval(parse(text=paste(repo.names[i],".issueData.cleanup=cleanUpIssueData(",repo.names[i],".issueData)",sep=""))))
+  
   gc()
 }
 
@@ -248,8 +248,6 @@ sendMailToMe("github","github done")
 ```
 
 ```{r}
-
-
 
 mozilla.repo.urls=getOrgsTop10Repos("https://github.com/mozilla",token)
 repo.names=sapply(strsplit(names(mozilla.repo.urls),"/"),tail,1)
@@ -281,8 +279,6 @@ sendMailToMe("mozilla done","mozilla done")
 
 ```{r}
 
-
-
 twitter.repo.urls=getOrgsTop10Repos("https://github.com/twitter",token)
 repo.names=sapply(strsplit(names(twitter.repo.urls),"/"),tail,1)
 repo.names=gsub("-",".",repo.names)
@@ -309,5 +305,11 @@ options(warn = oldw)
 
 sendMailToMe("twitter done","twitter done")
 
+
+```
+
+```{r}
+
+rm(list=ls()[c(-grep(".cleanup",ls()))])
 
 ```
