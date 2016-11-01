@@ -35,13 +35,17 @@ getOrgsRepoUrls=function(orgs.url,token)
   command=paste(orgsData$repos_url,"?per_page=100&page=",sep="")
   repos.command=paste(command,(1:(n/100+1)),sep="")
   repos.url=LimitConsciousExtraction("extract_info",repos.command,token=token)
-  if(length(repos.url)>1)
+  if(length(sapply(repos.url,length))>1)
   {
     temp=as.character(unlist(sapply(unlist(repos.url,recursive=FALSE),function(x){x["html_url"]})))
+    temp2=as.character(na.omit(temp))
+    return(temp2)
+
   } else{
     temp=as.character(unlist(sapply(repos.url,function(x){x["html_url"]})))
+    return(temp)
+
   }
-  return(temp)
 }
 
 
